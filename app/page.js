@@ -1,101 +1,110 @@
+'use client';
+
 import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
+import { motion } from 'framer-motion';
+import HeroSlider from "./components/HeroSlider";
+import CategorySlider from "./components/CategorySlider";
+import ProductSlider from "./components/ProductSlider";
 
-export default function Home() {
+const featuredProducts = [
+  {
+    id: 1,
+    name: 'Green Knit Sweater',
+    description: 'Cozy knitwear essential.',
+    price: 25,
+    image: 'https://images.unsplash.com/photo-1434389677669-e08b4cac3105',
+    hoverImage: 'https://images.unsplash.com/photo-1434389677669-e08b4cac3105?auto=format&q=80&w=800&flip=h'
+  },
+  {
+    id: 2,
+    name: 'Classic Tote Bag',
+    description: 'Spacious and durable carry-all.',
+    price: 20,
+    image: 'https://images.unsplash.com/photo-1516762689617-e1cffcef479d',
+    hoverImage: 'https://images.unsplash.com/photo-1516762689617-e1cffcef479d?auto=format&q=80&w=800&flip=v'
+  },
+  {
+    id: 3,
+    name: 'Classic Ceramic Vase',
+    description: 'Artisan-made home decor.',
+    price: 85,
+    image: 'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3',
+    hoverImage: 'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&q=80&w=800&flip=h'
+  },
+  {
+    id: 4,
+    name: 'Urban Traveler Backpack',
+    description: 'Durable and stylish backpack.',
+    price: 29,
+    image: 'https://images.unsplash.com/photo-1539109136881-3be0616acf4b',
+    hoverImage: 'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&q=80&w=800&flip=v'
+  }
+];
+
+const Home = () => {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <main className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
+      {/* Hero Slider */}
+      <section>
+        <HeroSlider />
+      </section>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      {/* Featured Products */}
+      <section className="w-[90%] max-w-[1200px] mx-auto mb-16">
+        <h2 className="text-2xl font-bold mb-8 text-gray-900 dark:text-white">Featured Products</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {featuredProducts.map((product) => (
+            <motion.div 
+              key={product.id} 
+              className="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg group shadow-lg hover:shadow-xl transition-all duration-300"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <div className="relative aspect-square mb-4 bg-white dark:bg-gray-700 rounded-lg overflow-hidden">
+                <Image
+                  src={product.image}
+                  alt={product.name}
+                  fill
+                  className="object-cover transition-opacity duration-500 group-hover:opacity-0"
+                />
+                <Image
+                  src={product.hoverImage}
+                  alt={`${product.name} alternate view`}
+                  fill
+                  className="object-cover absolute inset-0 opacity-0 scale-110 transition-all duration-500 group-hover:opacity-100 group-hover:scale-100"
+                />
+              </div>
+              <h3 className="font-semibold mb-2 text-gray-900 dark:text-white">{product.name}</h3>
+              <p className="text-gray-600 dark:text-gray-400 text-sm mb-3">{product.description}</p>
+              <div className="flex items-center justify-between">
+                <span className="font-bold text-gray-900 dark:text-white">${product.price}</span>
+                <motion.button 
+                  className="px-4 py-2 text-sm text-pink-500 dark:text-pink-400 border border-pink-500 dark:border-pink-400 rounded-full hover:bg-pink-500 dark:hover:bg-pink-400 hover:text-white transition-colors"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Add to Cart
+                </motion.button>
+              </div>
+            </motion.div>
+          ))}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+        
+        {/* Categories Slider */}
+        <div className="mt-20 -mx-[calc((100vw-90%)/2)] w-screen">
+          <CategorySlider />
+        </div>
+
+        {/* New Products */}
+        <div className="mt-20">
+          <ProductSlider />
+        </div>
+      </section>
+    </main>
   );
-}
+};
+
+export default Home;

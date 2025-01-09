@@ -2,20 +2,74 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Leaflet Map Styles */
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  z-index: 1;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+.leaflet-control-container .leaflet-routing-container-hide {
+  display: none;
+}
+
+:root {
+  --primary-color: #FF69B4;
+  --background-light: #ffffff;
+  --text-light: #1a1a1a;
+  --border-light: #f3f3f3;
+}
+
+[data-theme='dark'] {
+  --background-dark: #1a1a1a;
+  --text-dark: #ffffff;
+  --border-dark: #2d2d2d;
+}
+
+@layer base {
+  body {
+    @apply m-0 p-0 min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* Hide scrollbar */
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Scrollbar styles for Firefox */
+  * {
+    scrollbar-width: none;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .nav-link {
+    @apply text-gray-700 dark:text-gray-200 hover:text-pink-500 dark:hover:text-pink-400 transition-colors;
+  }
+
+  .nav-border {
+    @apply border-b border-gray-200 dark:border-gray-800;
+  }
+
+  .search-input::placeholder {
+    @apply text-gray-500 dark:text-gray-400;
+  }
+
+  .product-card {
+    @apply bg-white dark:bg-gray-800 rounded-xl shadow-sm overflow-hidden group;
+  }
+
+  .product-image {
+    @apply transition-transform duration-300 group-hover:scale-110;
+  }
+
+  .add-to-cart-button {
+    @apply absolute top-4 right-4 w-10 h-10 bg-pink-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg hover:bg-pink-600;
+  }
 }
