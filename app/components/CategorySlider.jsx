@@ -8,61 +8,61 @@ const categories = [
     id: 1,
     name: 'Featured',
     image: 'https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc',
-    link: '/featured'
+    link: '/shop?category=Featured'
   },
   {
     id: 2,
     name: 'Home',
     image: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace',
-    link: '/home'
+    link: '/shop?category=Home'
   },
   {
     id: 3,
     name: 'Jeans',
     image: 'https://images.unsplash.com/photo-1552374196-1ab2a1c593e8',
-    link: '/jeans'
+    link: '/shop?category=Clothing'
   },
   {
     id: 4,
     name: 'Shoes',
     image: 'https://images.unsplash.com/photo-1512327428889-607eeb19efe8',
-    link: '/shoes'
+    link: '/shop?category=Shoes'
   },
   {
     id: 5,
     name: 'T-shirts',
     image: 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c',
-    link: '/t-shirts'
+    link: '/shop?category=Clothing'
   },
   {
     id: 6,
     name: 'Accessories',
     image: 'https://images.unsplash.com/photo-1509319117193-57bab727e09d',
-    link: '/accessories'
+    link: '/shop?category=Accessories'
   },
   {
     id: 7,
     name: 'Dresses',
     image: 'https://images.unsplash.com/photo-1539008835657-9e8e9680c956',
-    link: '/dresses'
+    link: '/shop?category=Clothing'
   },
   {
     id: 8,
     name: 'Outerwear',
     image: 'https://images.unsplash.com/photo-1544022613-e87ca75a784a',
-    link: '/outerwear'
+    link: '/shop?category=Clothing'
   },
   {
     id: 9,
     name: 'Sportswear',
     image: 'https://images.unsplash.com/photo-1518459031867-a89b944bffe4',
-    link: '/sportswear'
+    link: '/shop?category=Sports'
   },
   {
     id: 10,
     name: 'Bags',
     image: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7',
-    link: '/bags'
+    link: '/shop?category=Bags'
   }
 ];
 

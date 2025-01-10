@@ -120,7 +120,7 @@ export default function HeroSlider() {
   };
 
   return (
-    <div className="relative h-[100vh] w-full overflow-hidden">
+    <div className="relative h-[100vh] w-full overflow-hidden ">
       <AnimatePresence mode="wait">
         <motion.div
           key={currentIndex}

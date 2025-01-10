@@ -1,6 +1,9 @@
 'use client';
 import Image from 'next/image';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { useCart } from '../context/CartContext';
+import { FiPlus } from 'react-icons/fi';
 
 const container = {
   hidden: { opacity: 0 },
@@ -53,6 +56,22 @@ const products = [
 ];
 
 export default function ProductSlider() {
+  const { addToCart } = useCart();
+
+  const handleAddToCart = (e, product) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.image,
+      description: product.description
+    });
+  };
+
   return (
     <div className="w-full">
       <motion.h2 
@@ -78,58 +97,42 @@ export default function ProductSlider() {
               transition={{ duration: 0.2 }}
             >
               <div className="relative aspect-square mb-4 rounded-lg overflow-hidden bg-gray-50 dark:bg-dark-card">
-                <Image
-                  src={product.image}
-                  alt={product.name}
-                  fill
-                  className="object-cover transition-transform duration-500 ease-out group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/20" />
+                <Link href={product.link}>
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    fill
+                    className="object-cover transition-transform duration-500 ease-out group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/20" />
+                </Link>
                 
-                <motion.div 
-                  className="absolute inset-0 flex items-center justify-center opacity-0 translate-y-4"
-                  whileHover={{ opacity: 1, translateY: 0 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <motion.button 
-                    className="bg-white/90 dark:bg-dark-bg/90 backdrop-blur-sm px-6 py-2 rounded-full text-sm font-medium 
-                      text-gray-900 dark:text-white shadow-lg"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+                <div className="absolute top-4 right-4">
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={(e) => handleAddToCart(e, product)}
+                    className="w-10 h-10 bg-pink-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg hover:bg-pink-600 z-10"
                   >
-                    Quick Add
+                    <FiPlus className="w-5 h-5" />
                   </motion.button>
-                </motion.div>
-              </div>
-              
-              <div className="space-y-2">
-                <div className="flex justify-between items-start">
-                  <motion.h3 
-                    className="font-medium text-gray-900 dark:text-white"
-                    whileHover={{ color: '#ec4899' }}
-                  >
-                    {product.name}
-                  </motion.h3>
-                  <motion.span 
-                    className="font-semibold text-gray-900 dark:text-white"
-                    whileHover={{ color: '#ec4899' }}
-                  >
-                    ${product.price}
-                  </motion.span>
                 </div>
-                <p className="text-gray-600 dark:text-gray-400 text-sm">
-                  {product.description}
-                </p>
+              </div>
+
+              <div>
+                <Link href={product.link}>
+                  <h3 className="font-medium text-gray-900 dark:text-dark-text mb-1">{product.name}</h3>
+                  <p className="text-sm text-gray-500 dark:text-dark-text-secondary mb-2">{product.description}</p>
+                  <p className="font-bold text-pink-500">${product.price}</p>
+                </Link>
                 <motion.button 
-                  className="w-full px-4 py-2 text-sm text-pink-500 border border-pink-500 rounded-full 
-                    dark:text-pink-400 dark:border-pink-400 transition-all duration-300 ease-out"
-                  whileHover={{ 
-                    backgroundColor: '#ec4899',
-                    color: '#ffffff',
-                    scale: 1.02
-                  }}
-                  whileTap={{ scale: 0.98 }}
+                  onClick={(e) => handleAddToCart(e, product)}
+                  className="w-full mt-4 px-6 py-2 bg-pink-500 text-white rounded-full text-sm font-medium 
+                    hover:bg-pink-600 transition-colors duration-300 flex items-center justify-center gap-2"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                 >
+                  <FiPlus className="w-4 h-4" />
                   Add to Cart
                 </motion.button>
               </div>

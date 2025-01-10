@@ -8,6 +8,7 @@ import { useTheme } from '../context/ThemeContext';
 import { useCart } from '../context/CartContext';
 import ThemeToggle from './ThemeToggle';
 import SearchResults from './SearchResults';
+import CartDropdown from './CartDropdown';
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -43,6 +44,7 @@ export default function Navbar() {
   const [searchResults, setSearchResults] = useState([]);
   const [showResults, setShowResults] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -140,25 +142,22 @@ export default function Navbar() {
               </motion.div>
 
               {/* Cart */}
-              <motion.div variants={itemVariants} className="relative">
-                <Link href="/cart">
-                  <motion.div
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="relative p-2"
+              <motion.div
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                className="relative p-2 cursor-pointer"
+                onClick={() => setIsCartOpen(true)}
+              >
+                <FiShoppingCart className="w-6 h-6 text-gray-700 dark:text-gray-200" />
+                {getCartCount() > 0 && (
+                  <motion.span
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    className="absolute -top-1 -right-1 bg-pink-500 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center"
                   >
-                    <FiShoppingCart className="w-6 h-6 text-gray-700 dark:text-gray-200" />
-                    {getCartCount() > 0 && (
-                      <motion.span
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        className="absolute -top-1 -right-1 bg-pink-500 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center"
-                      >
-                        {getCartCount()}
-                      </motion.span>
-                    )}
-                  </motion.div>
-                </Link>
+                    {getCartCount()}
+                  </motion.span>
+                )}
               </motion.div>
 
               {/* Theme Toggle */}
@@ -243,6 +242,12 @@ export default function Navbar() {
         results={searchResults} 
         isVisible={showResults} 
         onClose={() => setShowResults(false)} 
+      />
+
+      {/* Cart Dropdown */}
+      <CartDropdown 
+        isOpen={isCartOpen} 
+        onClose={() => setIsCartOpen(false)} 
       />
     </>
   );
