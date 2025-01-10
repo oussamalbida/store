@@ -44,24 +44,69 @@ const featuredProducts = [
 ];
 
 const Home = () => {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.3
+      }
+    }
+  };
+
+  const sectionVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut"
+      }
+    }
+  };
+
   return (
-    <main className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
+    <motion.main 
+      className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300"
+      initial="hidden"
+      animate="visible"
+      variants={containerVariants}
+    >
       {/* Hero Slider */}
-      <section>
+      <motion.section
+        variants={sectionVariants}
+      >
         <HeroSlider />
-      </section>
+      </motion.section>
 
       {/* Featured Products */}
-      <section className="w-[90%] max-w-[1200px] mx-auto mb-16">
-        <h2 className="text-2xl font-bold mb-8 text-gray-900 dark:text-white">Featured Products</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <motion.section 
+        className="w-[90%] mt-[100px] max-w-[1200px] mx-auto mb-16"
+        variants={sectionVariants}
+      >
+        <motion.h2 
+          className="text-2xl font-bold mb-8 text-gray-900 dark:text-white"
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          Featured Products
+        </motion.h2>
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+          variants={containerVariants}
+        >
           {featuredProducts.map((product) => (
             <motion.div 
               key={product.id} 
               className="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg group shadow-lg hover:shadow-xl transition-all duration-300"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
+              variants={sectionVariants}
+              whileHover={{ 
+                scale: 1.02,
+                transition: { duration: 0.2 }
+              }}
             >
               <div className="relative aspect-square mb-4 bg-white dark:bg-gray-700 rounded-lg overflow-hidden">
                 <Image
@@ -91,19 +136,36 @@ const Home = () => {
               </div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
         
         {/* Categories Slider */}
-        <div className="mt-20 -mx-[calc((100vw-90%)/2)] w-screen">
+        <motion.div 
+          className="mt-20 -mx-[calc((100vw-90%)/2)] w-screen"
+          variants={sectionVariants}
+          whileInView={{ 
+            opacity: 1, 
+            y: 0,
+            transition: { duration: 0.7, ease: "easeOut" }
+          }}
+          initial={{ opacity: 0, y: 30 }}
+        >
           <CategorySlider />
-        </div>
+        </motion.div>
 
         {/* New Products */}
-        <div className="mt-20">
+        <motion.div
+          variants={sectionVariants}
+          whileInView={{ 
+            opacity: 1, 
+            y: 0,
+            transition: { duration: 0.7, ease: "easeOut" }
+          }}
+          initial={{ opacity: 0, y: 30 }}
+        >
           <ProductSlider />
-        </div>
-      </section>
-    </main>
+        </motion.div>
+      </motion.section>
+    </motion.main>
   );
 };
 
