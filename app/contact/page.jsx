@@ -15,7 +15,7 @@ const location = [34.0522, -118.2437]; // Los Angeles coordinates
 const contactInfo = [
   {
     title: "Phone",
-    content: "+1 (555) 123-4567",
+    content: "+212 659 417 658",
     icon: <FaPhone className="text-pink-500" />
   },
   {
@@ -25,7 +25,7 @@ const contactInfo = [
   },
   {
     title: "Address",
-    content: "3252 Winding Way, Central Plaza, Willowbrook, CA 90210",
+    content: "beni mellal morocco",
     icon: <FaMapMarkerAlt className="text-pink-500" />
   }
 ];

@@ -14,31 +14,35 @@ L.Icon.Default.mergeOptions({
 
 export default function Map({ location = [34.0522, -118.2437] }) {
   useEffect(() => {
-    // This is needed to fix the map container size issue in some cases
-    const map = document.querySelector('.leaflet-container');
-    if (map) {
-      map.style.height = '100%';
-      map.style.width = '100%';
-    }
+    // Cleanup function to handle map container cleanup
+    return () => {
+      const mapContainer = document.querySelector('.leaflet-container');
+      if (mapContainer && mapContainer._leaflet_id) {
+        mapContainer._leaflet_id = null;
+      }
+    };
   }, []);
 
   return (
-    <MapContainer 
-      center={location} 
-      zoom={13} 
-      scrollWheelZoom={false}
-      style={{ height: '100%', width: '100%', zIndex: 1 }}
-    >
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-      <Marker position={location}>
-        <Popup>
-          Visit us here! <br />
-          Our physical location
-        </Popup>
-      </Marker>
-    </MapContainer>
+    <div style={{ height: '100%', width: '100%', position: 'relative' }}>
+      <MapContainer 
+        key={`${location[0]}-${location[1]}`}
+        center={location} 
+        zoom={13} 
+        scrollWheelZoom={false}
+        style={{ height: '100%', width: '100%', zIndex: 1 }}
+      >
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        <Marker position={location}>
+          <Popup>
+            Visit us here! <br />
+            Our physical location
+          </Popup>
+        </Marker>
+      </MapContainer>
+    </div>
   );
 }
